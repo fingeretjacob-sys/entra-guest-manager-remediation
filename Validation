@@ -1,0 +1,52 @@
+# Validation Procedure
+
+## Verify Manager Assignment
+
+Select several previously remediated users.
+
+Example:
+
+```powershell
+az rest --method GET --url "https://graph.microsoft.com/v1.0/users/<GuestObjectID>/manager"
+```
+
+Expected Result:
+
+Manager object is returned.
+
+## Sampling Validation
+
+Validate:
+
+- First updated user
+- Random user from middle
+- Last updated user
+
+## Count Validation
+
+Run:
+
+```powershell
+($Results |
+Where-Object {$_.HasManager -eq "No" -and $_.HasSponsor -eq "Yes"}).Count
+```
+
+Expected Result:
+
+```text
+0
+```
+
+## Reporting Validation
+
+Export final report.
+
+```powershell
+$Results | Export-Csv "./GuestSponsorReport_Final.csv" -NoTypeInformation
+```
+
+Review for:
+
+- Missing Managers
+- Missing Sponsors
+- Unexpected Values
