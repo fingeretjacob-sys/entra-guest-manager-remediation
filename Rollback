@@ -1,0 +1,48 @@
+# Rollback Procedure
+
+## Purpose
+
+Restore guest manager assignments if incorrect data was applied.
+
+## Requirements
+
+Backup file:
+
+```text
+SponsorManagerBackup.csv
+```
+
+created prior to updates.
+
+## Review Backup
+
+Inspect backup file to determine:
+
+- Guest User
+- Sponsor
+- Original Manager State
+
+## Rollback Method
+
+For each affected guest:
+
+1. Identify the intended manager.
+2. Reassign using Microsoft Graph.
+3. Validate result.
+
+## Validation
+
+Confirm restored values:
+
+```powershell
+az rest --method GET --url "https://graph.microsoft.com/v1.0/users/<GuestObjectID>/manager"
+```
+
+## Post-Rollback
+
+Document:
+
+- Date
+- Administrator
+- Number of accounts restored
+- Reason for rollback
