@@ -1,0 +1,1 @@
+# entra-guest-manager-remediation
