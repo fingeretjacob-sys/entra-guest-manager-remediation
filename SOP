@@ -1,0 +1,67 @@
+# SOP: Populate Entra Guest User Managers from Sponsors
+
+## Purpose
+
+This procedure identifies Microsoft Entra guest users who do not have a Manager assigned and populates the Manager attribute using the existing Sponsor relationship.
+
+## Scope
+
+This procedure applies to guest users in Microsoft Entra ID where:
+
+- Sponsor exists
+- Manager is blank
+
+## Prerequisites
+
+Required roles:
+
+- User Administrator
+- Global Reader (recommended)
+- Authentication Administrator (optional)
+
+Required tools:
+
+- Azure Cloud Shell
+- Azure CLI
+- Microsoft Graph API access
+
+## Risks
+
+- Incorrect sponsor assignments will result in incorrect manager assignments.
+- Always export a backup before making changes.
+
+## Process Overview
+
+1. Export guest users.
+2. Determine manager status.
+3. Determine sponsor status.
+4. Create backup report.
+5. Perform validation against a subset of users.
+6. Update managers.
+7. Validate results.
+8. Archive reports.
+
+```
+
+### Step 1 – Authenticate
+
+```powershell
+az login
+```
+
+### Step 2 – Export Guest Users
+
+Retrieve all guest users and their sponsor/manager status.
+
+### Step 3 – Identify Target Population
+
+Target users meet both conditions:
+
+```text
+HasManager = No
+HasSponsor = Yes
+```
+
+### Step 4 – Backup Existing Data
+
+Create backup
